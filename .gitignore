@@ -1,6 +1,7 @@
 data
 data_new
 data_optimized
-models
+models/mushroom_img_model.keras
+models/mushroom_img_model.h5
 mushroom_image_classification_updated.ipynb
 mushroom_image_classification_attempt1.ipynb

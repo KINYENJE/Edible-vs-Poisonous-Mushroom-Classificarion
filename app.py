@@ -20,6 +20,12 @@ app.add_middleware(
 # Load your trained model
 model = load_model(r"C:\Users\ADMIN\Desktop\mushroom_img_classification\models\mushroom_img_model.h5")
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Mushroom Classification API!"}
+
+
+
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
     # Read the uploaded image
@@ -37,3 +43,6 @@ async def predict(file: UploadFile = File(...)):
     result = "Poisonous" if preds[0] > 0.6 else "Edible"
 
     return {"prediction": result, "confidence": float(preds[0])}
+
+
+# Run the app with: uvicorn app:app --reload

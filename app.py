@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 # Load your trained model
-model = load_model(r"C:\Users\ADMIN\Desktop\mushroom_img_classification\models\mushroom_img_model.h5")
+model = load_model("models/mushroom_img_model.h5")
 
 @app.get("/")
 async def root():

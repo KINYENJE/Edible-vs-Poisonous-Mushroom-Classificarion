@@ -5,8 +5,13 @@ import cv2
 import numpy as np
 from PIL import Image
 import io
+import requests
+import os
 
 app = FastAPI()
+
+model_path = "models/mushroom_img_model.h5"
+google_drive_url = "https://drive.google.com/uc?id=15tsi1T_RllQ08yplYbm1dfYm6TAoeuKD"
 
 # Allow CORS for all origins (adjust as needed for security)
 app.add_middleware(
@@ -17,8 +22,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load your trained model
-model = load_model("models/mushroom_img_model.h5")
+# Check if the model file exists, and download it if not
+if not os.path.exists(model_path):
+    os.makedirs("models", exist_ok=True)
+    print("Downloading model from Google Drive...")
+    response = requests.get(google_drive_url)
+    with open(model_path, "wb") as f:
+        f.write(response.content)
+    print("Model downloaded successfully!")
+
+# Load the model
+model = load_model(model_path)
 
 @app.get("/")
 async def root():

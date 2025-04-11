@@ -7,6 +7,7 @@ from PIL import Image
 import io
 import requests
 import os
+import gdown
 
 app = FastAPI()
 
@@ -25,10 +26,8 @@ app.add_middleware(
 # Check if the model file exists, and download it if not
 if not os.path.exists(model_path):
     os.makedirs("models", exist_ok=True)
-    print("Downloading model from Google Drive...")
-    response = requests.get(google_drive_url)
-    with open(model_path, "wb") as f:
-        f.write(response.content)
+    print("Downloading model from Google Drive using gdown...")
+    gdown.download(google_drive_url, model_path, quiet=False)
     print("Model downloaded successfully!")
 
 # Load the model
